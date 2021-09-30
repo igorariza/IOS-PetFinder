@@ -40,6 +40,22 @@ enum Theme: Int{
   var tabBarBackgroudImage: UIImage?{
     return self == .graphical ? UIImage(named: "navBackground") : nil
   }
+  var backroundCellColor : UIColor{
+    switch self {
+    case .default, .graphical:
+      return UIColor.white
+    case .dark:
+      return UIColor(white: 0.4, alpha: 1.0)
+    }
+  }
+  var textCellColor : UIColor{
+    switch self {
+    case .default, .graphical:
+      return UIColor.black
+    case .dark:
+      return UIColor.white
+    }
+  }
   func aply(){
     //general
     UserDefaults.standard.set(rawValue, forKey: Keys.selectedTheme)
@@ -71,5 +87,29 @@ enum Theme: Int{
       .setBackgroundImage(controlBackground, for: .normal, barMetrics: .default)
     UISegmentedControl.appearance()
       .setBackgroundImage(selectedControlBackground, for: .selected, barMetrics: .default)
+    
+    //Custom esteper
+    UIStepper.appearance().setBackgroundImage(controlBackground, for: .normal)
+    UIStepper.appearance().setBackgroundImage(controlBackground, for: .disabled)
+    UIStepper.appearance().setBackgroundImage(controlBackground, for: .highlighted)
+    UIStepper.appearance().setDecrementImage(UIImage(named: "fewerPaws"), for: .normal)
+    UIStepper.appearance().setIncrementImage(UIImage(named: "morePaws"), for: .normal)
+    
+    
+    //Custom Slider
+    UISlider.appearance().setThumbImage(UIImage(named: "sliderThumb"), for: .normal)
+    UISlider.appearance().setMaximumTrackImage(UIImage(named: "maximumTrack")?.resizableImage(withCapInsets: UIEdgeInsets(top:0, left:0, bottom:0, right:6)), for: .normal)
+    UISlider.appearance().setMinimumTrackImage(UIImage(named: "minimumTrack")?
+      .withRenderingMode(.alwaysTemplate)
+      .resizableImage(withCapInsets: UIEdgeInsets(top:0, left:6, bottom:0, right:0)), for: .normal)
+    
+    //UISwitch
+    UISwitch.appearance().onTintColor = mainColor.withAlphaComponent(0.4)
+    UISwitch.appearance().thumbTintColor = mainColor
+    
+    //UITableViewCell
+    UITableViewCell.appearance().backgroundColor = backroundCellColor
+    UILabel.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).textColor = textCellColor
+    
   }
 }

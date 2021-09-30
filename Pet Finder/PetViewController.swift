@@ -17,6 +17,8 @@ class PetViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.backgroundColor = Theme.current.backroundCellColor
+    
     title = pet.name
     
     petImageView.image = UIImage(named: pet.imageName)
